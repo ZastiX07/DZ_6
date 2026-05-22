@@ -1,12 +1,6 @@
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
 
-public class Enemy : MonoBehaviour
+public class Enemy : Follower
 {
-    private Rigidbody _rigidbody;
 
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
 }
