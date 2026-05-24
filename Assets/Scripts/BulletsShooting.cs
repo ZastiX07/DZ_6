@@ -4,10 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class BulletsShooting : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Transform _objectToShoot;
     [SerializeField] private float _timeWaitShooting;
-    [SerializeField] private float _number;
+    [SerializeField] private float _speed;
 
     private void Start()
     {
@@ -18,16 +18,17 @@ public class BulletsShooting : MonoBehaviour
     {
         bool isWork = enabled;
 
+        WaitForSeconds wait = new WaitForSeconds(_timeWaitShooting);
+        
         while (isWork)
         {
             Vector3 direction = (_objectToShoot.position - transform.position).normalized;
 
-            Rigidbody newBullet = Instantiate(_rigidbody, transform.position + direction, Quaternion.identity);
+            Bullet newBullet = Instantiate(_bulletPrefab, transform.position + direction, Quaternion.identity);
 
-            newBullet.transform.up = direction;
-            newBullet.linearVelocity = direction * _number;
+            newBullet.Initialize(direction, _speed);
 
-            yield return new WaitForSeconds(_timeWaitShooting);
+            yield return wait;
         }
     }
 }
